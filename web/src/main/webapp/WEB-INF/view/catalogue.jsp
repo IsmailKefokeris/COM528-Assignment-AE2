@@ -15,6 +15,9 @@
 <main role="main" class="container">
     <H1>Catalogue</H1>
     
+    <div style="color:red;">${errorMessage}</div>
+    <div style="color:green;">${message}</div>
+    
     <table class="table">
 
         <tr>
@@ -33,13 +36,13 @@
                 <td></td>
                 <td>
                     <!-- post avoids url encoded parameters -->
-                    <form action="./" method="get">
-                        <input type="hidden" name="itemName" value="${item.name}">
+                    <form action="./viewModifyItem" method="get">
+                        <input type="hidden" name="itemID" value="${item.id}">
                         <input type="hidden" name="action" value="modifyItem">
                         <button type="submit" >Modify Item</button>
                     </form>
-                    <form action="./" method="get">
-                        <input type="hidden" name="itemName" value="${item.name}">
+                    <form action="./viewModifyItem" method="get">
+                        <input type="hidden" name="itemID" value="${item.id}">
                         <input type="hidden" name="action" value="removeItem">
                         <button type="submit" >Remove Item</button>
                     </form>                        

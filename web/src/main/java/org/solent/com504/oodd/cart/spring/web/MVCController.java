@@ -113,7 +113,7 @@ public class MVCController {
     
     @RequestMapping(value = "/catalogue", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewCatalogue(@RequestParam(name = "action", required = false) String action,
-            @RequestParam(name = "itemName", required = false) String itemName,
+            @RequestParam(name = "itemID", required = false) String itemID,
             @RequestParam(name = "itemUUID", required = false) String itemUuid,
             Model model,
             HttpSession session) {
@@ -123,17 +123,25 @@ public class MVCController {
         model.addAttribute("sessionUser", sessionUser);
 
         // used to set tab selected
-        model.addAttribute("selectedPage", "home");
+        model.addAttribute("selectedPage", "admin");
 
         String message = "";
         String errorMessage = "";
+        
+        
+        if (!UserRole.ADMINISTRATOR.equals(sessionUser.getUserRole())) {
+            errorMessage = "you must be an administrator to access users information";
+            model.addAttribute("errorMessage", errorMessage);
+            return "catalogue";
+        }
 
         // note that the shopping cart is is stored in the sessionUser's session
         // so there is one cart per sessionUser
 
         if (action == null) {
-            // do nothing but show page
+            
         }
+            // do nothing but show page
         List<ShoppingItem> availableItems = shoppingService.getAvailableItems();
 
         // populate model with values
@@ -142,6 +150,99 @@ public class MVCController {
         model.addAttribute("errorMessage", errorMessage);
 
         return "catalogue";
+    }
+    
+    @RequestMapping(value = "/viewModifyItem", method = {RequestMethod.GET})
+    public String modifyItem(@RequestParam(name = "action", required = false) String action,
+            @RequestParam(name = "itemID", required = false) Long itemID,
+            Model model,
+            HttpSession session) {
+        
+        String message = "";
+        String errorMessage = "";
+        
+        // security check if party is allowed to access or modify this party
+        User sessionUser = getSessionUser(session);
+        model.addAttribute("sessionUser", sessionUser);
+        
+        // used to set tab selected
+        model.addAttribute("selectedPage", "admin");
+        
+        if (!UserRole.ADMINISTRATOR.equals(sessionUser.getUserRole())) {
+            errorMessage = "you must be an administrator to access users information";
+            model.addAttribute("errorMessage", errorMessage);
+            return "viewModifyItem";
+        }
+        
+        Optional<ShoppingItem> optional = shoppingItemCatalogRepository.findById(itemID);
+        ShoppingItem foundItem = optional.get();
+        
+        if ("modifyItem".equals(action)) {
+            model.addAttribute("modifyItem", foundItem);
+            return "viewModifyItem";
+            
+        } else if ("removeItem".equals(action)) {
+            List<ShoppingItem> availableItems = shoppingService.getAvailableItems();
+            try{
+                shoppingItemCatalogRepository.delete(foundItem);
+            } catch (Exception e) {
+                errorMessage = "Error in deleting " + foundItem.getName() + " :: " + e;
+                model.addAttribute("errorMessage", errorMessage);
+                return "catalogue";
+            } finally {
+                List<ShoppingItem> availableItems2 = shoppingService.getAvailableItems();
+                message = "Delete of " + foundItem.getName() + " Successful!";
+                model.addAttribute("message", message);
+                model.addAttribute("availableItems", availableItems2);
+                return "catalogue";
+            }
+        }
+        errorMessage = "Error in deleting " + foundItem.getName();
+        model.addAttribute("errorMessage", errorMessage);
+        return "catalogue";        
+    }
+    
+    @RequestMapping(value = "/viewModifyItem", method = {RequestMethod.POST})
+    public String modifyItem(@RequestParam(name = "action", required = false) String action,
+            @RequestParam(name = "itemID", required = false) Long itemID,
+            @RequestParam(name = "itemName", required = false) String itemName,
+            @RequestParam(name = "itemPrice", required = false) Double itemPrice,
+            Model model,
+            HttpSession session) {
+        
+        
+        String message = "";
+        String errorMessage = "";
+        
+        // security check if party is allowed to access or modify this party
+        User sessionUser = getSessionUser(session);
+        model.addAttribute("sessionUser", sessionUser);
+        
+        if (!UserRole.ADMINISTRATOR.equals(sessionUser.getUserRole())) {
+            errorMessage = "you must be an administrator to access users information";
+            model.addAttribute("errorMessage", errorMessage);
+            return "viewModifyItem";
+        }
+        
+        model.addAttribute("selectedPage", "admin");
+        
+        Optional<ShoppingItem> optional = shoppingItemCatalogRepository.findById(itemID);
+        ShoppingItem foundItem = optional.get();
+        
+        try {
+            foundItem.setName(itemName);
+            foundItem.setPrice(itemPrice);
+            message = foundItem.getName() + " Updated Successfully";
+            model.addAttribute("message", message);
+            model.addAttribute("modifyItem", foundItem);
+            shoppingItemCatalogRepository.save(foundItem);
+            return "viewModifyItem";
+        } catch (Exception e) {
+            errorMessage = "Error in Updating " + foundItem.getName();
+            model.addAttribute("errorMessage", errorMessage);
+            model.addAttribute("modifyItem", foundItem);
+            return "viewModifyItem";
+        }
     }
     
     @RequestMapping(value = "/cart", method = {RequestMethod.GET, RequestMethod.POST})

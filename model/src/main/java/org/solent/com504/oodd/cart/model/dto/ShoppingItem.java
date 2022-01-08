@@ -28,10 +28,9 @@ public class ShoppingItem {
         
     }
 
-    public ShoppingItem(String name, Double price, Integer quantity) {
+    public ShoppingItem(String name, Double price) {
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
         this.uuid = UUID.randomUUID().toString();
     }
 

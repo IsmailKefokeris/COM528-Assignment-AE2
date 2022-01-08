@@ -75,14 +75,14 @@ public class PopulateDatabaseOnStart {
         
 //        Adding Items
         List<ShoppingItem> itemList = Arrays.asList(
-                new ShoppingItem("house", 20000.00, 2),
-                new ShoppingItem("hen", 5.00, 2),
-                new ShoppingItem("car", 5800.70, 1),
-                new ShoppingItem("wheel", 25.00, 1),
-                new ShoppingItem("door", 128.54, 10),
-                new ShoppingItem("bowl", 2.50, 1),
-                new ShoppingItem("ball", 10.00, 10),
-                new ShoppingItem("pet alligator", 65.00, 1)
+                new ShoppingItem("house", 20000.00),
+                new ShoppingItem("hen", 5.00),
+                new ShoppingItem("car", 5800.70),
+                new ShoppingItem("wheel", 25.00),
+                new ShoppingItem("door", 128.54),
+                new ShoppingItem("bowl", 2.50),
+                new ShoppingItem("ball", 10.00),
+                new ShoppingItem("pet alligator", 65.00)
         );
         
         for (ShoppingItem item : itemList) {
