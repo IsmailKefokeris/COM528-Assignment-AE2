@@ -5,6 +5,7 @@
  */
 package org.solent.com504.oodd.cart.model.dto;
 
+import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,10 +28,16 @@ public class ShoppingItem {
         
     }
 
-    public ShoppingItem(String name, Double price) {
+    public ShoppingItem(String name, Double price, Integer quantity) {
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
+        this.uuid = UUID.randomUUID().toString();
     }
+
+//    public ShoppingItem(String house, double d, int i) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

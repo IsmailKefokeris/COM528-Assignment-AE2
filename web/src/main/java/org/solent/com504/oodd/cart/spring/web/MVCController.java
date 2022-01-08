@@ -129,31 +129,11 @@ public class MVCController {
 
         if (action == null) {
             // do nothing but show page
-        } else if ("addItemToCart".equals(action)) {
-            ShoppingItem shoppingItem = shoppingService.getNewItemByName(itemName);
-            if (shoppingItem == null) {
-                message = "cannot add unknown " + itemName + " to cart";
-            } else {
-                message = "adding " + itemName + " to cart price= " + shoppingItem.getPrice();
-                shoppingCart.addItemToCart(shoppingItem);
-            }
-        } else if ("removeItemFromCart".equals(action)) {
-            message = "removed " + itemName + " from cart";
-            shoppingCart.removeItemFromCart(itemUuid);
-        } else {
-            message = "unknown action=" + action;
         }
-
         List<ShoppingItem> availableItems = shoppingService.getAvailableItems();
-
-        List<ShoppingItem> shoppingCartItems = shoppingCart.getShoppingCartItems();
-
-        Double shoppingcartTotal = shoppingCart.getTotal();
 
         // populate model with values
         model.addAttribute("availableItems", availableItems);
-        model.addAttribute("shoppingCartItems", shoppingCartItems);
-        model.addAttribute("shoppingcartTotal", shoppingcartTotal);
         model.addAttribute("message", message);
         model.addAttribute("errorMessage", errorMessage);
 

@@ -5,11 +5,14 @@
  */
 package org.solent.com504.oodd.cart.spring.service;
 
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.solent.com504.oodd.cart.dao.impl.ShoppingItemCatalogRepository;
 import org.solent.com504.oodd.cart.dao.impl.UserRepository;
+import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
 
@@ -33,6 +36,9 @@ public class PopulateDatabaseOnStart {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private ShoppingItemCatalogRepository shoppingItemCatalogRepository;
 
     @PostConstruct
     public void initDatabase() {
@@ -66,6 +72,23 @@ public class PopulateDatabaseOnStart {
         } else {
             LOG.info("defaultuser already exists. Not creating new :" + defaultUser);
         }
+        
+//        Adding Items
+        List<ShoppingItem> itemList = Arrays.asList(
+                new ShoppingItem("house", 20000.00, 2),
+                new ShoppingItem("hen", 5.00, 2),
+                new ShoppingItem("car", 5800.70, 1),
+                new ShoppingItem("wheel", 25.00, 1),
+                new ShoppingItem("door", 128.54, 10),
+                new ShoppingItem("bowl", 2.50, 1),
+                new ShoppingItem("ball", 10.00, 10),
+                new ShoppingItem("pet alligator", 65.00, 1)
+        );
+        
+        for (ShoppingItem item : itemList) {
+            shoppingItemCatalogRepository.save(item);
+        }
+        
 
         LOG.debug("database initialised");
     }
