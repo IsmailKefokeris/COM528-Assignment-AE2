@@ -35,7 +35,7 @@
                 <td>
                     <!-- post avoids url encoded parameters -->
                     <form action="./home" method="get">
-                        <input type="hidden" name="itemName" value="${item.name}">
+                        <input type="hidden" name="itemID" value="${item.id}">
                         <input type="hidden" name="action" value="addItemToCart">
                         <button type="submit" >Add Item</button>
                     </form> 

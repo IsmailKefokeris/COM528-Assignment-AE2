@@ -3,10 +3,12 @@ package org.solent.com504.oodd.cart.spring.web;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.solent.com504.oodd.cart.dao.impl.ShoppingItemCatalogRepository;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
@@ -31,6 +33,9 @@ public class MVCController {
     //private ShoppingService shoppingService = WebObjectFactory.getShoppingService();
     @Autowired
     ShoppingService shoppingService = null;
+    
+    @Autowired
+    private ShoppingItemCatalogRepository shoppingItemCatalogRepository;
 
     // note that scope is session in configuration
     // so the shopping cart is unique for each web session
@@ -56,7 +61,7 @@ public class MVCController {
 
     @RequestMapping(value = "/home", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewHome(@RequestParam(name = "action", required = false) String action,
-            @RequestParam(name = "itemName", required = false) String itemName,
+            @RequestParam(name = "itemID", required = false) Long itemID,
             @RequestParam(name = "itemUUID", required = false) String itemUuid,
             Model model,
             HttpSession session) {
@@ -77,16 +82,15 @@ public class MVCController {
         if (action == null) {
             // do nothing but show page
         } else if ("addItemToCart".equals(action)) {
-            ShoppingItem shoppingItem = shoppingService.getNewItemByName(itemName);
-            if (shoppingItem == null) {
-                message = "cannot add unknown " + itemName + " to cart";
+            Optional<ShoppingItem> optional = shoppingItemCatalogRepository.findById(itemID);
+            ShoppingItem foundItem = optional.get();
+            
+            if (foundItem == null) {
+                message = "cannot add unknown " + itemID + " to cart";
             } else {
-                message = "adding " + itemName + " to cart price= " + shoppingItem.getPrice();
-                shoppingCart.addItemToCart(shoppingItem);
+                message = "adding " + foundItem.getName()  + " to cart price= " + foundItem.getPrice();
+                shoppingCart.addItemToCart(foundItem);
             }
-        } else if ("removeItemFromCart".equals(action)) {
-            message = "removed " + itemName + " from cart";
-            shoppingCart.removeItemFromCart(itemUuid);
         } else {
             message = "unknown action=" + action;
         }
