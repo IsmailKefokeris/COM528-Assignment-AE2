@@ -147,7 +147,7 @@ public class MVCController {
     @RequestMapping(value = "/cart", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewCart(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "itemName", required = false) String itemName,
-            @RequestParam(name = "itemUUID", required = false) String itemUuid,
+            @RequestParam(name = "itemID", required = false) Long itemID,
             Model model, 
             HttpSession session) {
 
@@ -160,7 +160,11 @@ public class MVCController {
         
         if ("removeItemFromCart".equals(action)) {
             message = "removed " + itemName + " from cart";
-            shoppingCart.removeItemFromCart(itemUuid);
+            Optional<ShoppingItem> optional = shoppingItemCatalogRepository.findById(itemID);
+            ShoppingItem foundItem = optional.get();
+            
+            shoppingCart.removeItemFromCart(foundItem.getUuid());
+            
         } else {
             message = "unknown action=" + action;
         }

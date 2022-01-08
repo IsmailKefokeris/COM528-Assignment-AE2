@@ -33,14 +33,14 @@
                 <td></td>
                 <td>
                     <!-- post avoids url encoded parameters -->
-                    <form action="./home" method="get">
+                    <form action="./" method="get">
                         <input type="hidden" name="itemName" value="${item.name}">
-                        <input type="hidden" name="action" value="addItemToCart">
+                        <input type="hidden" name="action" value="modifyItem">
                         <button type="submit" >Modify Item</button>
                     </form>
-                    <form action="./home" method="get">
+                    <form action="./" method="get">
                         <input type="hidden" name="itemName" value="${item.name}">
-                        <input type="hidden" name="action" value="addItemToCart">
+                        <input type="hidden" name="action" value="removeItem">
                         <button type="submit" >Remove Item</button>
                     </form>                        
                 </td>
