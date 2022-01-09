@@ -24,10 +24,18 @@ public class ShoppingItem {
     private Integer quantity=0;
     private Double price=0.0;
     
+    /**
+     *
+     */
     public ShoppingItem(){
         
     }
 
+    /**
+     *
+     * @param name
+     * @param price
+     */
     public ShoppingItem(String name, Double price) {
         this.name = name;
         this.price = price;
@@ -38,44 +46,85 @@ public class ShoppingItem {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
 
+    /**
+     *
+     * @return
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUuid() {
         return uuid;
     }
 
+    /**
+     *
+     * @param uuuid
+     */
     public void setUuid(String uuuid) {
         this.uuid = uuuid;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getQuantity() {
         return quantity;
     }
 
+    /**
+     *
+     * @param quantity
+     */
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getPrice() {
         return price;
     }
 
+    /**
+     *
+     * @param price
+     */
     public void setPrice(Double price) {
         this.price = price;
     }

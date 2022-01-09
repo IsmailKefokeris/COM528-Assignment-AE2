@@ -32,6 +32,9 @@ public class BankClientTest {
     String toUsername=null;
     String toPassword=null;
 
+    /**
+     *
+     */
     @Before
     public void before() {
         fromCard = new CreditCard();
@@ -52,6 +55,9 @@ public class BankClientTest {
         toPassword = "defaulttestpass";
     }
 
+    /**
+     *
+     */
     @Test
     public void testClient() {
 
@@ -66,6 +72,9 @@ public class BankClientTest {
 
     }
 
+    /**
+     *
+     */
     @Test
     public void testClientAuth() {
 

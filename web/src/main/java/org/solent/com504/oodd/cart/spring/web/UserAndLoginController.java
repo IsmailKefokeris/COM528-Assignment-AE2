@@ -10,8 +10,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.solent.com504.oodd.cart.dao.impl.UserRepository;
 import org.solent.com504.oodd.cart.model.dto.Address;
+import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
+import org.solent.com504.oodd.cart.model.service.ShoppingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ *
+ * @author ismai
+ */
 @Controller
 @RequestMapping("/")
 public class UserAndLoginController {
@@ -28,6 +34,9 @@ public class UserAndLoginController {
 
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    ShoppingService shoppingService = null;
 
     private User getSessionUser(HttpSession session) {
         User sessionUser = (User) session.getAttribute("sessionUser");
@@ -40,6 +49,12 @@ public class UserAndLoginController {
         return sessionUser;
     }
 
+    /**
+     *
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
     public String logout(Model model,
             HttpSession session) {
@@ -51,6 +66,12 @@ public class UserAndLoginController {
         return "redirect:/home";
     }
 
+    /**
+     *
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/login", method = {RequestMethod.GET})
     @Transactional
     public String login(
@@ -78,6 +99,16 @@ public class UserAndLoginController {
 
     }
 
+    /**
+     *
+     * @param action
+     * @param username
+     * @param password
+     * @param password2
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
     @Transactional
     public String login(@RequestParam(value = "action", required = false) String action,
@@ -137,7 +168,10 @@ public class UserAndLoginController {
                         + " is disabled in this system");
                 return "login";
             }
+            List<ShoppingItem> availableItems = shoppingService.getAvailableItems();
 
+            // populate model with values
+            model.addAttribute("availableItems", availableItems);
             message = "successfully logged in user:" + username;
             session.setAttribute("sessionUser", loginUser);
 
@@ -158,6 +192,16 @@ public class UserAndLoginController {
         }
     }
 
+    /**
+     *
+     * @param action
+     * @param username
+     * @param password
+     * @param password2
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/register", method = {RequestMethod.GET})
     @Transactional
     public String registerGET(@RequestParam(value = "action", required = false) String action,
@@ -179,6 +223,16 @@ public class UserAndLoginController {
         return "register";
     }
 
+    /**
+     *
+     * @param action
+     * @param username
+     * @param password
+     * @param password2
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/register", method = {RequestMethod.POST})
     @Transactional
     public String register(@RequestParam(value = "action", required = false) String action,
@@ -245,6 +299,12 @@ public class UserAndLoginController {
         }
     }
 
+    /**
+     *
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = {"/users"}, method = RequestMethod.GET)
     @Transactional
     public String users(Model model,
@@ -268,6 +328,13 @@ public class UserAndLoginController {
         return "users";
     }
 
+    /**
+     *
+     * @param username
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = {"/viewModifyUser"}, method = RequestMethod.GET)
     public String modifyuser(
             @RequestParam(value = "username", required = true) String username,
@@ -315,6 +382,31 @@ public class UserAndLoginController {
         return "viewModifyUser";
     }
 
+    /**
+     *
+     * @param username
+     * @param firstName
+     * @param secondName
+     * @param userRole
+     * @param userEnabled
+     * @param houseNumber
+     * @param addressLine1
+     * @param addressLine2
+     * @param city
+     * @param county
+     * @param country
+     * @param postcode
+     * @param latitude
+     * @param longitude
+     * @param telephone
+     * @param mobile
+     * @param password
+     * @param password2
+     * @param action
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = {"/viewModifyUser"}, method = RequestMethod.POST)
     public String updateuser(
             @RequestParam(value = "username", required = true) String username,
@@ -447,6 +539,15 @@ public class UserAndLoginController {
      * Default exception handler, catches all exceptions, redirects to friendly
      * error page. Does not catch request mapping errors
      */
+
+    /**
+     *
+     * @param e
+     * @param model
+     * @param request
+     * @return
+     */
+
     @ExceptionHandler(Exception.class)
     public String myExceptionHandler(final Exception e, Model model,
             HttpServletRequest request

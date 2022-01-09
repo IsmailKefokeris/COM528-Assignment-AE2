@@ -24,17 +24,26 @@ public class ShoppingCartTest {
 
     ShoppingCart shoppingCart = null;
 
+    /**
+     *
+     */
     @Before
     public void before() {
         shoppingCart = ServiceObjectFactory.getNewShoppingCart();
         shoppingCart.getShoppingCartItems().clear();
     }
 
+    /**
+     *
+     */
     @Test
     public void test1() {
         assertNotNull(shoppingCart);
     }
 
+    /**
+     *
+     */
     @Test
     public void testshoppingcart() {
         assertNotNull(shoppingCart);

@@ -22,12 +22,18 @@ public class ShoppingServiceTest {
     
     ShoppingService shoppingService = null;
 
+    /**
+     *
+     */
     @Before
     public void before(){
         shoppingService = ServiceObjectFactory.getShoppingService();
         
     }
     
+    /**
+     *
+     */
     @Test
     public void test1() {
         assertNotNull(shoppingService);

@@ -17,7 +17,9 @@ import org.solent.com504.oodd.cardcheck.RegexCardValidator;
  */
 public class CheckCalculateLunnTest {
     
-
+    /**
+     *
+     */
     @Test
     public void checkCalculateLunn() {
         

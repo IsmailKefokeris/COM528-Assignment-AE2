@@ -24,10 +24,18 @@ public class WebObjectFactory {
         
     }
     
+    /**
+     *
+     * @return
+     */
     public static ShoppingService getShoppingService(){
         return shoppingService;
     }
     
+    /**
+     *
+     * @return
+     */
     public static ShoppingCart getNewShoppingCart(){
         return ServiceObjectFactory.getNewShoppingCart();
     }

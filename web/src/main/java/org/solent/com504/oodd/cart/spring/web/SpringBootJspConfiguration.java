@@ -1,5 +1,6 @@
 package org.solent.com504.oodd.cart.spring.web;
 
+import org.solent.com504.oodd.bank.client.impl.BankRestClientImpl;
 import org.solent.com504.oodd.cart.model.service.ShoppingCart;
 import org.solent.com504.oodd.cart.model.service.ShoppingService;
 import org.solent.com504.oodd.cart.service.ServiceObjectFactory;
@@ -13,6 +14,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.context.WebApplicationContext;
 
+/**
+ *
+ * @author ismai
+ */
 @Configuration
 @Import(ServiceConfiguration.class)
 @PropertySource("classpath:persistence-app.properties")
@@ -22,8 +27,18 @@ public class SpringBootJspConfiguration {
 //    ShoppingService getShoppingService() {
 //        return ServiceObjectFactory.getShoppingService();
 //    }
+    
+    @Bean
+    BankRestClientImpl getBankClient() {
+        return ServiceObjectFactory.getBankClient();
+    }
 
     // see https://www.baeldung.com/spring-mvc-session-attributes
+
+    /**
+     *
+     * @return
+     */
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_SESSION,
             proxyMode = ScopedProxyMode.TARGET_CLASS)

@@ -10,9 +10,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.solent.com504.oodd.bank.model.dto.CreditCard;
 import org.solent.com504.oodd.cart.dao.impl.ShoppingItemCatalogRepository;
 import org.solent.com504.oodd.cart.dao.impl.UserRepository;
-import org.solent.com504.oodd.cart.model.dto.CardDetails;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
@@ -53,6 +53,9 @@ public class PopulateDatabaseOnStart {
     @Autowired
     private ShoppingItemCatalogRepository shoppingItemCatalogRepository;
 
+    /**
+     *
+     */
     @PostConstruct
     public void initDatabase() {
         LOG.debug("initialising database with startup values");
@@ -66,9 +69,9 @@ public class PopulateDatabaseOnStart {
         adminUser.setUserRole(UserRole.ADMINISTRATOR);
         
         // Initialising default admin card details
-        CardDetails adminCardDetails = new CardDetails();
+        CreditCard adminCardDetails = new CreditCard();
         adminCardDetails.setName(DEFAULT_ADMIN_USERNAME);
-        adminCardDetails.setCardNumber(DEFAULT_ADMIN_CARDNUM);
+        adminCardDetails.setCardnumber(DEFAULT_ADMIN_CARDNUM);
         adminCardDetails.setEndDate(DEFAULT_ADMIN_ENDDATE);
         adminCardDetails.setCvv(DEFAULT_ADMIN_CVV);
         adminCardDetails.setIssueNumber(DEFAULT_ADMIN_ISSUENUM);
@@ -89,9 +92,9 @@ public class PopulateDatabaseOnStart {
         defaultUser.setUserRole(UserRole.CUSTOMER);
         
         // Initialising default user card details
-        CardDetails userCardDetails = new CardDetails();
+        CreditCard userCardDetails = new CreditCard();
         userCardDetails.setName(DEFAULT_USER_USERNAME);
-        userCardDetails.setCardNumber(DEFAULT_USER_CARDNUM);
+        userCardDetails.setCardnumber(DEFAULT_USER_CARDNUM);
         adminCardDetails.setEndDate(DEFAULT_USER_ENDDATE);
         userCardDetails.setCvv(DEFAULT_USER_CVV);
         userCardDetails.setIssueNumber(DEFAULT_USER_ISSUENUM);

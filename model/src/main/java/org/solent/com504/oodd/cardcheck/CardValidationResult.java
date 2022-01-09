@@ -25,11 +25,22 @@ public class CardValidationResult {
     private String error;
     private String cardNo;
 
+    /**
+     *
+     * @param cardNo
+     * @param error
+     */
     public CardValidationResult(String cardNo, String error) {
         this.cardNo = cardNo;
         this.error = error;
         this.valid = false;
     }
+
+    /**
+     *
+     * @param cardNo
+     * @param cardType
+     */
     public CardValidationResult(String cardNo, CardCompany cardType) {
         this.cardNo = cardNo;
         this.valid = true;

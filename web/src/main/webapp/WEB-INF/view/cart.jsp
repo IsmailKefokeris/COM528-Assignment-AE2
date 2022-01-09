@@ -14,6 +14,8 @@
 <!-- Begin page content -->
 <main role="main" class="container">
     <H1>Shopping Cart</H1>
+    <div style="color:red;">${errorMessage}</div>
+    <div style="color:green;">${message}</div>
     <table class="table">
 
         <tr>
@@ -43,7 +45,7 @@
             <td>TOTAL</td>
             <td>${shoppingcartTotal}</td>
             <td>
-                <form action="./purchase" method="post">
+                <form action="./checkout" method="get">
                     <input type="hidden" name="itemID" value="${item.id}">
                     <input type="hidden" name="itemName" value="${item.name}">
                     <input type="hidden" name="action" value="removeItemFromCart">

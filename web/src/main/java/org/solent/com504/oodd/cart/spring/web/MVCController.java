@@ -14,7 +14,7 @@ import org.solent.com504.oodd.cardcheck.RegexCardValidator;
 import org.solent.com504.oodd.cart.dao.impl.InvoiceRepository;
 import org.solent.com504.oodd.cart.dao.impl.ShoppingItemCatalogRepository;
 import org.solent.com504.oodd.cart.dao.impl.UserRepository;
-import org.solent.com504.oodd.cart.model.dto.CardDetails;
+import org.solent.com504.oodd.bank.model.dto.CreditCard;
 import org.solent.com504.oodd.cart.model.dto.Invoice;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
@@ -31,6 +31,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ *
+ * @author ismai
+ */
 @Controller
 @RequestMapping("/")
 public class MVCController {
@@ -68,11 +72,26 @@ public class MVCController {
     }
 
     // this redirects calls to the root of our application to index.html
+
+    /**
+     *
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
     public String index(Model model) {
         return "redirect:/index.html";
     }
 
+    /**
+     *
+     * @param action
+     * @param itemID
+     * @param itemUuid
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/home", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewHome(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "itemID", required = false) Long itemID,
@@ -124,6 +143,15 @@ public class MVCController {
         return "home";
     }
 
+    /**
+     *
+     * @param action
+     * @param itemID
+     * @param itemUuid
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/catalogue", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewCatalogue(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "itemID", required = false) String itemID,
@@ -163,6 +191,14 @@ public class MVCController {
         return "catalogue";
     }
 
+    /**
+     *
+     * @param action
+     * @param itemID
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/viewModifyItem", method = {RequestMethod.GET})
     public String modifyItem(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "itemID", required = false) Long itemID,
@@ -213,6 +249,16 @@ public class MVCController {
         return "catalogue";
     }
 
+    /**
+     *
+     * @param action
+     * @param itemID
+     * @param itemName
+     * @param itemPrice
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/viewModifyItem", method = {RequestMethod.POST})
     public String modifyItem(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "itemID", required = false) Long itemID,
@@ -255,6 +301,15 @@ public class MVCController {
         }
     }
 
+    /**
+     *
+     * @param action
+     * @param itemName
+     * @param itemID
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/cart", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewCart(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "itemName", required = false) String itemName,
@@ -293,6 +348,17 @@ public class MVCController {
         return "cart";
     }
 
+    /**
+     *
+     * @param action
+     * @param cardNum
+     * @param endDate
+     * @param issueNum
+     * @param cvv
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/checkout", method = {RequestMethod.GET})
     public String viewCheckout(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "cardNum", required = false) String cardNum,
@@ -304,18 +370,31 @@ public class MVCController {
 
         String message = "";
         String errorMessage = "";
-        CardDetails savedCardDetails = null;
-
+        CreditCard savedCardDetails = null;
+        
+        
         try {
             User sessionUser = getSessionUser(session);
+            if (UserRole.ANONYMOUS.equals(sessionUser.getUserRole())) {
+                List<ShoppingItem> shoppingCartItems = shoppingCart.getShoppingCartItems();
+                Double shoppingcartTotal = shoppingCart.getTotal();
+                model.addAttribute("shoppingCartItems", shoppingCartItems);
+                model.addAttribute("shoppingcartTotal", shoppingcartTotal);
+                errorMessage = "you must be logged in to checkout cart";
+                model.addAttribute("errorMessage", errorMessage);
+                return "cart";
+            }
+            
             Optional<User> optional = userRepository.findById(sessionUser.getId());
             User foundUser = optional.get();
-            savedCardDetails = foundUser.getCardDetails();
 
         } catch (InvalidDataAccessApiUsageException e) {
             errorMessage = "Must be Signed in to Checkout!!...";
             model.addAttribute("errorMessage", errorMessage);
             return "redirect:/login";
+        } catch (NoSuchMethodError e) {
+            message = "Enter Card Details";
+            model.addAttribute("message", message);
         }
         model.addAttribute("selectedPage", "cart");
         model.addAttribute("savedCardDetails", savedCardDetails);
@@ -324,6 +403,17 @@ public class MVCController {
         return "checkout";
     }
 
+    /**
+     *
+     * @param action
+     * @param cardNum
+     * @param endDate
+     * @param issueNum
+     * @param cvv
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/checkout", method = {RequestMethod.POST})
     public String checkout(@RequestParam(name = "action", required = false) String action,
             @RequestParam(name = "cardNum", required = false) String cardNum,
@@ -334,18 +424,16 @@ public class MVCController {
             HttpSession session) {
         String message = "";
         String errorMessage = "";
-        CardDetails savedCardDetails = null;
+        CreditCard savedCardDetails = null;
 
         try {
             User sessionUser = getSessionUser(session);
             Optional<User> optional = userRepository.findById(sessionUser.getId());
             User foundUser = optional.get();
-            savedCardDetails = foundUser.getCardDetails();
-            
             List<User> adminOptional = userRepository.findByUsername("globaladmin");
             User adminUser = adminOptional.get(0);
             
-            LOG.debug(adminUser.getCardDetails());
+//            LOG.debug(adminUser.getCardDetails());
             
 //            Shopping Cart
             List<ShoppingItem> shoppingCartItems = shoppingCart.getShoppingCartItems();
@@ -356,24 +444,30 @@ public class MVCController {
             if ("continue".equals(action)) {
                 LOG.debug("CARDNUM: " + cardNum);
                 CardValidationResult result = RegexCardValidator.isValid(cardNum);
+                LOG.debug("VALIDATION COMPLETE " + result);
                 if (result.isValid()) {
-                    
+                    LOG.debug("Card IS VALID");
                     try {
-                        CardDetails newCard = new CardDetails();
-                        newCard.setCardNumber(cardNum);
+                        CreditCard newCard = new CreditCard();
+                        newCard.setCardnumber(cardNum);
                         newCard.setCvv(cvv);
                         newCard.setEndDate(endDate);
                         newCard.setIssueNumber(issueNum);
                         foundUser.setCardDetails(newCard);
-                        
-                        shoppingService.purchaseItems(shoppingCart, foundUser, newCard, adminUser.getCardDetails());
-                        
+                        LOG.debug("USER CARD DETAILS SET: " + foundUser.getCardDetails());
+                        LOG.debug("ATTEMPTING TO PURCHASE SHOPPING CART");
+                        boolean outcome = shoppingService.purchaseItems(shoppingCart, foundUser, newCard, adminUser.getCardDetails());
+                        LOG.debug("SHOPPING CART PURCHASE STAGE PASSED: " + outcome);
+                        if (outcome) {
+                            message = "Transaction Complete!";
+
+                        } else {
+                            errorMessage = "Error with transaction";
+                        }
                     } catch (Exception e) {
-                        
+                        LOG.debug("Error in try statement: " + e);
                     }
-
                 }
-
             }
 
 //            message = "USER: " + foundUser.getFirstName();
@@ -381,15 +475,25 @@ public class MVCController {
             errorMessage = "Must be Signed in to Checkout!!...";
             model.addAttribute("errorMessage", errorMessage);
             return "redirect:/login";
+        } catch (NoSuchMethodError e) {
+            LOG.debug("NO SUCH METHOD ERROR: " + e);
+            model.addAttribute("message", message);
         }
 
         model.addAttribute("selectedPage", "cart");
         model.addAttribute("savedCardDetails", savedCardDetails);
         model.addAttribute("message", message);
-
+        model.addAttribute("errorMessage", errorMessage);
         return "checkout";
     }
     
+    /**
+     *
+     * @param username
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/viewInvoices", method = {RequestMethod.GET, RequestMethod.POST})
     public String viewInvoices(@RequestParam(name = "username", required = false) String username,
             Model model, 
@@ -431,6 +535,12 @@ public class MVCController {
         return "viewInvoices";
     }
 
+    /**
+     *
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/about", method = {RequestMethod.GET, RequestMethod.POST})
     public String aboutCart(Model model, HttpSession session) {
 
@@ -443,6 +553,12 @@ public class MVCController {
         return "about";
     }
 
+    /**
+     *
+     * @param model
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/contact", method = {RequestMethod.GET, RequestMethod.POST})
     public String contactCart(Model model, HttpSession session) {
 
@@ -460,6 +576,15 @@ public class MVCController {
      * Default exception handler, catches all exceptions, redirects to friendly
      * error page. Does not catch request mapping errors
      */
+
+    /**
+     *
+     * @param e
+     * @param model
+     * @param request
+     * @return
+     */
+
     @ExceptionHandler(Exception.class)
     public String myExceptionHandler(final Exception e, Model model, HttpServletRequest request) {
         final StringWriter sw = new StringWriter();

@@ -19,6 +19,9 @@ public class PasswordUtilsTest {
 
     final static Logger LOG = LogManager.getLogger(PasswordUtilsTest.class);
 
+    /**
+     *
+     */
     @Test
     public void testPasswordUtils() {
 

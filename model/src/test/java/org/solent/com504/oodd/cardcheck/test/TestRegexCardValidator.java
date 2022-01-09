@@ -17,16 +17,49 @@ import org.solent.com504.oodd.cardcheck.RegexCardValidator;
  */
 public class TestRegexCardValidator {
 
+    /**
+     *
+     */
     public static final String VALID_VISA_1 = "4444444444444448";
+
+    /**
+     *
+     */
     public static final String VALID_MASTERCARD_1 = "5500005555555559";
+
+    /**
+     *
+     */
     public static final String VALID_AMEX_1 = "371449635398431";
+
+    /**
+     *
+     */
     public static final String VALID_DINERS_1 = "36438936438936";
+
+    /**
+     *
+     */
     public static final String VALID_DISCOVER_1 = "6011016011016011";
+
+    /**
+     *
+     */
     public static final String VALID_JCB_1 = "3566003566003566";
+
+    /**
+     *
+     */
     public static final String LHUN_FAIL_1 = "1111111111111111";
 
+    /**
+     *
+     */
     public static final String INVALID_STRING = "abcdabcdabcdabcd";
 
+    /**
+     *
+     */
     @Test
     public void testCardVisa() {
         CardValidationResult result = RegexCardValidator.isValid(VALID_VISA_1);
@@ -35,6 +68,9 @@ public class TestRegexCardValidator {
         assertEquals(result.getCardType(),CardCompany.VISA );
     }
 
+    /**
+     *
+     */
     @Test
     public void testCardMastercard() {
         CardValidationResult result = RegexCardValidator.isValid(VALID_MASTERCARD_1);
@@ -43,6 +79,9 @@ public class TestRegexCardValidator {
         assertEquals(result.getCardType(),CardCompany.MASTERCARD );
     }
 
+    /**
+     *
+     */
     @Test
     public void testCardAmex() {
 
@@ -53,6 +92,9 @@ public class TestRegexCardValidator {
 
     }
 
+    /**
+     *
+     */
     @Test
     public void testCardDiners() {
         CardValidationResult result = RegexCardValidator.isValid(VALID_DINERS_1);
@@ -61,6 +103,9 @@ public class TestRegexCardValidator {
         assertEquals(result.getCardType(),CardCompany.DINERS );
     }
 
+    /**
+     *
+     */
     @Test
     public void testCardDiscover() {
         CardValidationResult result = RegexCardValidator.isValid(VALID_DISCOVER_1);
@@ -70,6 +115,9 @@ public class TestRegexCardValidator {
 
     }
 
+    /**
+     *
+     */
     @Test
     public void testCardJcb() {
         CardValidationResult result = RegexCardValidator.isValid(VALID_JCB_1);
@@ -79,6 +127,9 @@ public class TestRegexCardValidator {
 
     }
 
+    /**
+     *
+     */
     @Test
     public void testCardWrongString() {
         CardValidationResult result = RegexCardValidator.isValid(INVALID_STRING);
@@ -86,6 +137,9 @@ public class TestRegexCardValidator {
         assertFalse(result.isValid());
     }
 
+    /**
+     *
+     */
     @Test
     public void testCardFailLhun() {
         CardValidationResult result = RegexCardValidator.isValid(LHUN_FAIL_1);

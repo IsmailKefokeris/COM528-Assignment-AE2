@@ -14,12 +14,28 @@ import java.util.List;
  */
 public interface ShoppingCart {
 
+    /**
+     *
+     * @return
+     */
     public List<ShoppingItem> getShoppingCartItems();
     
+    /**
+     *
+     * @param shoppingItem
+     */
     public void addItemToCart(ShoppingItem shoppingItem);
     
+    /**
+     *
+     * @param itemUuid
+     */
     public void removeItemFromCart(String itemUuid);
     
+    /**
+     *
+     * @return
+     */
     public double getTotal();
     
 }

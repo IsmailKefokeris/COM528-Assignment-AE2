@@ -19,6 +19,10 @@ public class ShoppingCartImpl implements ShoppingCart {
 
     private HashMap<String, ShoppingItem> itemMap = new HashMap<String, ShoppingItem>();
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<ShoppingItem> getShoppingCartItems() {
         List<ShoppingItem> itemlist = new ArrayList();
@@ -29,6 +33,10 @@ public class ShoppingCartImpl implements ShoppingCart {
         return itemlist;
     }
 
+    /**
+     *
+     * @param shoppingItem
+     */
     @Override
     public void addItemToCart(ShoppingItem shoppingItem) {
         // itemMap.put(shoppingItem.getUuid(), shoppingItem);
@@ -50,6 +58,10 @@ public class ShoppingCartImpl implements ShoppingCart {
         }
     }
 
+    /**
+     *
+     * @param itemUuid
+     */
     @Override
     public void removeItemFromCart(String itemUuid) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -57,6 +69,10 @@ public class ShoppingCartImpl implements ShoppingCart {
         itemMap.remove(itemUuid);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getTotal() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -8,6 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+/**
+ *
+ * @author ismai
+ */
 @Entity
 public class BankTransaction {
 
@@ -27,70 +31,134 @@ public class BankTransaction {
 
     private String message;
 
+    /**
+     *
+     * @return
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     @OneToOne
     public BankAccount getFromAccount() {
         return fromAccount;
     }
 
+    /**
+     *
+     * @param fromAccount
+     */
     public void setFromAccount(BankAccount fromAccount) {
         this.fromAccount = fromAccount;
     }
 
+    /**
+     *
+     * @return
+     */
     @OneToOne
     public BankAccount getToAccount() {
         return toAccount;
     }
 
+    /**
+     *
+     * @param toAccount
+     */
     public void setToAccount(BankAccount toAccount) {
         this.toAccount = toAccount;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getTransactionDate() {
         return transactionDate;
     }
 
+    /**
+     *
+     * @param transactionDate
+     */
     public void setTransactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getAmount() {
         return amount;
     }
 
+    /**
+     *
+     * @param amount
+     */
     public void setAmount(Double amount) {
         this.amount = amount;
     }
 
+    /**
+     *
+     * @return
+     */
     public BankTransactionStatus getStatus() {
         return status;
     }
 
+    /**
+     *
+     * @param status
+     */
     public void setStatus(BankTransactionStatus status) {
         this.status = status;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     *
+     * @param message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTransactionId() {
         return transactionId;
     }
 
+    /**
+     *
+     * @param transactionId
+     */
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }

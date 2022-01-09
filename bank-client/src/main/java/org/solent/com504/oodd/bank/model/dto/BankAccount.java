@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ *
+ * @author ismai
+ */
 @Entity
 public class BankAccount {
 
@@ -23,62 +27,118 @@ public class BankAccount {
 
     private boolean active = true;
 
+    /**
+     *
+     * @return
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     @Embedded
     public User getOwner() {
         return owner;
     }
 
+    /**
+     *
+     * @param owner
+     */
     public void setOwner(User owner) {
         this.owner = owner;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSortcode() {
         return sortcode;
     }
 
+    /**
+     *
+     * @param sortcode
+     */
     public void setSortcode(String sortcode) {
         this.sortcode = sortcode;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAccountNo() {
         return accountNo;
     }
 
+    /**
+     *
+     * @param accountNo
+     */
     public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
     }
 
+    /**
+     *
+     * @return
+     */
     @Embedded
     public CreditCard getCreditcard() {
         return creditcard;
     }
 
+    /**
+     *
+     * @param creditcard
+     */
     public void setCreditcard(CreditCard creditcard) {
         this.creditcard = creditcard;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     *
+     * @param active
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getBalance() {
         return balance;
     }
 
+    /**
+     *
+     * @param balance
+     */
     public void setBalance(Double balance) {
         this.balance = balance;
     }

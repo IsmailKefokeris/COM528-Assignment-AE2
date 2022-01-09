@@ -48,6 +48,9 @@ public class InvoiceRepositoryTest {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
+    /**
+     *
+     */
     @Test
     public void testInvoice() {
         LOG.debug("****************** starting test");

@@ -7,7 +7,7 @@ package org.solent.com504.oodd.cart.model.service;
 
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import java.util.List;
-import org.solent.com504.oodd.cart.model.dto.CardDetails;
+import org.solent.com504.oodd.bank.model.dto.CreditCard;
 import org.solent.com504.oodd.cart.model.dto.User;
 
 /**
@@ -16,10 +16,27 @@ import org.solent.com504.oodd.cart.model.dto.User;
  */
 public interface ShoppingService {
     
-        public List<ShoppingItem> getAvailableItems();
+    /**
+     *
+     * @return
+     */
+    public List<ShoppingItem> getAvailableItems();
         
-        public boolean purchaseItems(ShoppingCart shoppingCart,User user,CardDetails purchaserCard, CardDetails sellerCard);
+    /**
+     *
+     * @param shoppingCart
+     * @param user
+     * @param purchaserCard
+     * @param sellerCard
+     * @return
+     */
+    public boolean purchaseItems(ShoppingCart shoppingCart,User user,CreditCard purchaserCard, CreditCard sellerCard);
         
-        public ShoppingItem getNewItemByName(String uuid);
+    /**
+     *
+     * @param uuid
+     * @return
+     */
+    public ShoppingItem getNewItemByName(String uuid);
 
 }

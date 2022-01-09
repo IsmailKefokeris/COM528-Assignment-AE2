@@ -25,21 +25,34 @@ import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvi
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.solent.com504.oodd.bank.model.dto.TransactionReplyMessage;
 import org.solent.com504.oodd.bank.model.dto.TransactionRequestMessage;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author cgallen
  */
+@Service
 public class BankRestClientImpl implements BankRestClient {
 
     final static Logger LOG = LogManager.getLogger(BankRestClientImpl.class);
 
     String urlStr;
 
+    /**
+     *
+     * @param urlStr
+     */
     public BankRestClientImpl(String urlStr) {
         this.urlStr = urlStr;
     }
 
+    /**
+     *
+     * @param fromCard
+     * @param toCard
+     * @param amount
+     * @return
+     */
     @Override
     public TransactionReplyMessage transferMoney(CreditCard fromCard, CreditCard toCard, Double amount) {
         LOG.debug("transferMoney called: ");
@@ -71,6 +84,15 @@ public class BankRestClientImpl implements BankRestClient {
 
     }
 
+    /**
+     *
+     * @param fromCard
+     * @param toCard
+     * @param amount
+     * @param userName
+     * @param password
+     * @return
+     */
     @Override
     public TransactionReplyMessage transferMoney(CreditCard fromCard, CreditCard toCard, Double amount, String userName, String password) {
         LOG.debug("transferMoney called: ");
