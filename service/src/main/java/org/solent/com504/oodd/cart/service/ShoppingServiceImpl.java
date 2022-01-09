@@ -6,13 +6,22 @@
 package org.solent.com504.oodd.cart.service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.transaction.Transaction;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.solent.com504.oodd.cart.dao.impl.InvoiceRepository;
 import org.solent.com504.oodd.cart.dao.impl.ShoppingItemCatalogRepository;
+import org.solent.com504.oodd.cart.dao.impl.UserRepository;
+import org.solent.com504.oodd.cart.model.dto.CardDetails;
+import org.solent.com504.oodd.cart.model.dto.Invoice;
 import org.solent.com504.oodd.cart.model.service.ShoppingCart;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
+import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.service.ShoppingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,22 +35,17 @@ public class ShoppingServiceImpl implements ShoppingService {
     
     @Autowired
     private ShoppingItemCatalogRepository shoppingItemCatalogRepository;
+    
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    private static final Logger LOG = LogManager.getLogger(ShoppingServiceImpl.class);  
 
-    // note ConcurrentHashMap instead of HashMap if map can be altered while being read
-//    private Map<String, ShoppingItem> itemMap = new ConcurrentHashMap<String, ShoppingItem>();
-//
-//    private List<ShoppingItem> itemlist = Arrays.asList(new ShoppingItem("house", 20000.00),
-//            new ShoppingItem("hen", 5.00),
-//            new ShoppingItem("car", 5000.00),
-//            new ShoppingItem("pet alligator", 65.00)
-//    );
 
     public ShoppingServiceImpl() {
-
-        // initialised the hashmap
-//        for (ShoppingItem item : itemlist) {
-//            itemMap.put(item.getName(), item);
-//        }
     }
 
     @Override
@@ -51,12 +55,24 @@ public class ShoppingServiceImpl implements ShoppingService {
     }
 
     @Override
-    public boolean purchaseItems(ShoppingCart shoppingCart) {
-        System.out.println("purchased items");
-        for (ShoppingItem shoppingItem : shoppingCart.getShoppingCartItems()) {
-            System.out.println(shoppingItem);
-        }
+    public boolean purchaseItems(ShoppingCart shoppingCart,User user,CardDetails purchaserCard, CardDetails sellerCard) {
+        LOG.info("Purchasing Items");
+        
+        Double shoppingcartTotal = shoppingCart.getTotal();
+        
+//        Creating Invoice
+        Invoice invoice1 = new Invoice();
+        invoice1.setAmountDue(shoppingcartTotal);
+        invoice1.setDateOfPurchase(new Date());
+        invoice1.setPurchaser(user);
+        invoice1.setPurchasedItems(shoppingCart.getShoppingCartItems());
+        invoiceRepository.save(invoice1);
+        
+//        Transfering Money
+        Transaction result = new BankRestClientImpl(bankUrl);
 
+        LOG.debug("transaction reply:" + result);
+        
         return true;
     }
 

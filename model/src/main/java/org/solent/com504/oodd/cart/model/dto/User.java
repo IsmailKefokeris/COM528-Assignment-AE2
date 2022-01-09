@@ -28,6 +28,16 @@ public class User {
     private UserRole userRole;
 
     private Boolean enabled = true;
+    
+    private CardDetails cardDetails;
+
+    public CardDetails getCardDetails() {
+        return cardDetails;
+    }
+
+    public void setCardDetails(CardDetails cardDetails) {
+        this.cardDetails = cardDetails;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -42,7 +42,16 @@
         <tr>
             <td>TOTAL</td>
             <td>${shoppingcartTotal}</td>
+            <td>
+                <form action="./purchase" method="post">
+                    <input type="hidden" name="itemID" value="${item.id}">
+                    <input type="hidden" name="itemName" value="${item.name}">
+                    <input type="hidden" name="action" value="removeItemFromCart">
+                    <button type="submit" >Checkout Cart</button>
+                </form>
+            </td>
         </tr>
+        
     </table>
 </main>
 
