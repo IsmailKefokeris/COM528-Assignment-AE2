@@ -6,6 +6,7 @@ This is an individual assignment which will build on the work you have done as a
 [Design Documentation](./UMLmodel/DESIGNDOCUMENTATION.md)
 ------------------------------------------------------------------
 [Design Diagrams](./UMLmodel/DESIGNDIAGRAM.md)
+------------------------------------------------------------------
 
 
 ## Running the Application
