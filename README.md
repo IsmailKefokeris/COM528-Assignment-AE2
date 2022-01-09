@@ -11,6 +11,14 @@ This is an individual assignment which will build on the work you have done as a
 
 ## Running the Application
 
+## Requirements
+The application requires the following
+
+Java JDK 11 (8 will do)
+Web Browser
+apache tomcat 9 (webserver)
+Netbeans (OPTIONAL- Simple Webserver setup)
+
 ### To run using stand alone spring boot maven plugin
 
 at base of project do a build
@@ -68,6 +76,7 @@ Currently shoppingCartApplication-service tests dont seem to be running and are 
 
 Unable to create a Javadoc
 `[ERROR] Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:3.3.1:javadoc (default-cli) on project shoppingCartApplication-model: An error has occurred in Javadoc report generation:`
+
 
 ## Licensing and Copyright
 
