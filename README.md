@@ -1,8 +1,23 @@
-# Shopping Application program template
+# COM528 - Shopping Application - AE2
 
-This is based upon the Shopping Cart Using Spring with Bootstrap in session 6
+### Assessment Task 
+This is an individual assignment which will build on the work you have done as a group in AE1. If useful, you may reuse any of the AE1 artifacts generate by your group but you must fork the code and add any improvements, extra features and documentation in a project hosted in your own Git repository. 
+
+[Design Documentation](./UMLmodel/DESIGNDOCUMENTATION.md)
+------------------------------------------------------------------
+[Design Diagrams](./UMLmodel/DESIGNDIAGRAM.md)
+------------------------------------------------------------------
 
 
+## Running the Application
+
+## Requirements
+The application requires the following
+
+Java JDK 11 (8 will do)
+Web Browser
+apache tomcat 9 (webserver)
+Netbeans (OPTIONAL- Simple Webserver setup)
 
 ### To run using stand alone spring boot maven plugin
 
@@ -43,3 +58,26 @@ http://localhost:8080/shoppingCartApplication/home
 not
 
 http://localhost:8080/shoppingCartApplication/home.jsp
+
+## Default Values
+When Starting the Application there are two default accounts you are able to log into:
+
+Username: globaladmin
+Password: globaladmin
+
+Username: user1234
+Password: user1234
+
+## Known Issues
+
+Currently shoppingCartApplication-service tests dont seem to be running and are counted as a failure, From my own tests all methods do actually work and I am still in the process of debugging this error.
+`[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.12.4:test (default-test) on project shoppingCartApplication-service: There are test failures.`
+
+
+Unable to create a Javadoc
+`[ERROR] Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:3.3.1:javadoc (default-cli) on project shoppingCartApplication-model: An error has occurred in Javadoc report generation:`
+
+
+## Licensing and Copyright
+
+Licensed uner the Apache License Version 2.0. [HERE](https://github.com/IsmailKefokeris/COM528-Assignment-AE2/blob/main/LICENSE)
