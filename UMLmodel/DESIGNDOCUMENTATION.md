@@ -1,7 +1,6 @@
 
 # Use Cases Text
 
-| Use cases   	|
 | Use case Num 	| Actor(s)   | Actions     | Reaction    |
 | ----------- 	| ---------- | ----------- | ----------- |
 | 1A 	| Anonymous, Customer, Admin | Actors open the shoppingCartApplication website. |  |
@@ -40,6 +39,12 @@
 
 # Basic (General) Test Plan
 
+This test Plan will include the three actors
+
+`Anonymous`
+`Admin`
+`Customer`
+
 | Test Plan	| 	Action	| 	Expected Result	| 	Result Given	| 	Pass or Fail	|
 | ----------- 	| ---------- | ----------- | ----------- | ----------- |
 | 1	| 	Anonymous User loads up home page | 	Home.jsp loads up displaying all items currently in the catalogue and their price.	| 	Same as Expected.	| 	Pass	| 
@@ -64,6 +69,20 @@
 | 20	| 	Anonymous or non admin user tries accessing user modification page | 	Directed to empty page with an error message stating they must be logged in.	| 	Same as Expected.	| 	Pass	| 
 | 21	| Non adming user tries accessing modification user page for another user | 	Redirects them with error message saying they must be logged into that user to modify it or be an admin.	| 	Same as Expected.	| 	Pass	| 
 
+
+# Features for Each Role:
+
+## Anonymous
+  •	Any user who is viewing the site but has not logged in.
+  •	Unable to checkout.
+## Admin
+  •	Able to add and remove and modify items from the catalogue. 
+  •	Able to able to view and modify users in the system.
+  •	Able to able to view and modify orders in the system.
+## Customer
+  •	Any user who has created an account and may have created orders.
+## Deactivated
+  •	A user whose account has been deactivated. This user cannot log into the system but details of previous orders will be retained for the administrator to see.
 
 
 
