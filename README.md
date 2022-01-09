@@ -71,4 +71,4 @@ Unable to create a Javadoc
 
 ## Licensing and Copyright
 
-Licensed uner the Apache License Version 2.0. [HERE](https://github.com/5islaj05/A6-Bank-assessment/blob/master/LICENSE)
+Licensed uner the Apache License Version 2.0. [HERE](https://github.com/IsmailKefokeris/COM528-Assignment-AE2/blob/main/LICENSE)
