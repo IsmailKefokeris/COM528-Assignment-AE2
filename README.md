@@ -3,7 +3,7 @@
 ### Assessment Task 
 This is an individual assignment which will build on the work you have done as a group in AE1. If useful, you may reuse any of the AE1 artifacts generate by your group but you must fork the code and add any improvements, extra features and documentation in a project hosted in your own Git repository. 
 
-[Design Documentation](./UMLmodel/README.md)
+[Design Documentation](./UMLmodel/DESIGNDOCUMENTATION.md)
 
 ## Running the Application
 
