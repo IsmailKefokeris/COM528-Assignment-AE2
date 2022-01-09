@@ -72,16 +72,16 @@ This test Plan will include the three actors
 
 # Features for Each Role:
 
-## Anonymous
+### Anonymous
   •	Any user who is viewing the site but has not logged in.
   •	Unable to checkout.
-## Admin
+### Admin
   •	Able to add and remove and modify items from the catalogue. 
   •	Able to able to view and modify users in the system.
   •	Able to able to view and modify orders in the system.
-## Customer
+### Customer
   •	Any user who has created an account and may have created orders.
-## Deactivated
+### Deactivated
   •	A user whose account has been deactivated. This user cannot log into the system but details of previous orders will be retained for the administrator to see.
 
 
