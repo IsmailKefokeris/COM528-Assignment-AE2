@@ -46,6 +46,12 @@
                                 <button class="btn" type="submit" >Modify User</button>
                             </form> 
                         </td>
+                        <td>
+                            <form action="./viewInvoices" method="GET">
+                                <input type="hidden" name="username" value="${user.username}">
+                                <button class="btn" type="submit" >View Invoices</button>
+                            </form> 
+                        </td>
                     </tr>
                 </c:forEach>
 

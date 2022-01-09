@@ -389,6 +389,47 @@ public class MVCController {
 
         return "checkout";
     }
+    
+    @RequestMapping(value = "/viewInvoices", method = {RequestMethod.GET, RequestMethod.POST})
+    public String viewInvoices(@RequestParam(name = "username", required = false) String username,
+            Model model, 
+            HttpSession session) {
+        String message = "";
+        String errorMessage = "";
+
+
+        // get sessionUser from session
+        User sessionUser = getSessionUser(session);
+        model.addAttribute("sessionUser", sessionUser);
+        
+        LOG.debug("Mapping recieved.");
+        
+        if (!UserRole.ADMINISTRATOR.equals(sessionUser.getUserRole())) {
+            errorMessage = "you must be an administrator to access users information";
+            model.addAttribute("errorMessage", errorMessage);
+            return "redirect:/home";
+        }
+        
+        List<User> optional = userRepository.findByUsername(username);
+        User foundUser = optional.get(0);
+        
+        List<Invoice> invoiceList = invoiceRepository.findAll();
+        List<Invoice> userSpecificList = null;
+        
+        for (Invoice invoice : invoiceList) {
+            if (invoice.getPurchaser().equals(foundUser)) {
+                userSpecificList.add(invoice);
+            }
+        }
+        
+        
+
+        // used to set tab selected
+        model.addAttribute("selectedPage", "about");
+        model.addAttribute("invoiceList", userSpecificList);
+
+        return "viewInvoices";
+    }
 
     @RequestMapping(value = "/about", method = {RequestMethod.GET, RequestMethod.POST})
     public String aboutCart(Model model, HttpSession session) {

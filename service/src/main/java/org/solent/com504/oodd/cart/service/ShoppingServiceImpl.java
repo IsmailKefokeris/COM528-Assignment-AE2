@@ -69,9 +69,8 @@ public class ShoppingServiceImpl implements ShoppingService {
         invoiceRepository.save(invoice1);
         
 //        Transfering Money
-        Transaction result = new BankRestClientImpl(bankUrl);
 
-        LOG.debug("transaction reply:" + result);
+//        LOG.debug("transaction reply:" + result);
         
         return true;
     }
