@@ -6,13 +6,16 @@
 package org.solent.com504.oodd.cart.spring.service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.solent.com504.oodd.bank.model.dto.CreditCard;
+import org.solent.com504.oodd.cart.dao.impl.InvoiceRepository;
 import org.solent.com504.oodd.cart.dao.impl.ShoppingItemCatalogRepository;
 import org.solent.com504.oodd.cart.dao.impl.UserRepository;
+import org.solent.com504.oodd.cart.model.dto.Invoice;
 import org.solent.com504.oodd.cart.model.dto.ShoppingItem;
 import org.solent.com504.oodd.cart.model.dto.User;
 import org.solent.com504.oodd.cart.model.dto.UserRole;
@@ -49,6 +52,9 @@ public class PopulateDatabaseOnStart {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private InvoiceRepository invoiceRepository;
     
     @Autowired
     private ShoppingItemCatalogRepository shoppingItemCatalogRepository;
@@ -120,10 +126,19 @@ public class PopulateDatabaseOnStart {
                 new ShoppingItem("pet alligator", 65.00)
         );
         
+        Double shoppingcartTotal = 0.0;
+        
         for (ShoppingItem item : itemList) {
             shoppingItemCatalogRepository.save(item);
         }
         
+        
+        Invoice invoice1 = new Invoice();
+        invoice1.setAmountDue(shoppingcartTotal);
+        invoice1.setDateOfPurchase(new Date());
+        invoice1.setPurchaser(defaultUser);
+        invoice1.setPurchasedItems(itemList);
+        invoiceRepository.save(invoice1);
 
         LOG.debug("database initialised");
     }

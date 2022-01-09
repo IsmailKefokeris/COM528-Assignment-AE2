@@ -46,9 +46,6 @@
             <td>${shoppingcartTotal}</td>
             <td>
                 <form action="./checkout" method="get">
-                    <input type="hidden" name="itemID" value="${item.id}">
-                    <input type="hidden" name="itemName" value="${item.name}">
-                    <input type="hidden" name="action" value="removeItemFromCart">
                     <button type="submit" >Checkout Cart</button>
                 </form>
             </td>

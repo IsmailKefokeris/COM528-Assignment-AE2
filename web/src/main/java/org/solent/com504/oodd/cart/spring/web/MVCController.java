@@ -518,12 +518,16 @@ public class MVCController {
         User foundUser = optional.get(0);
         
         List<Invoice> invoiceList = invoiceRepository.findAll();
+        LOG.debug("INVOICE " + invoiceList);
         List<Invoice> userSpecificList = null;
         
         for (Invoice invoice : invoiceList) {
-            if (invoice.getPurchaser().equals(foundUser)) {
-                userSpecificList.add(invoice);
-            }
+            LOG.debug("Iterating through invoice list");
+//            if (invoice.getPurchaser().equals(foundUser)) {
+//                LOG.debug("Found Invoice from " + invoice.getPurchaser());
+//                userSpecificList.add(invoice);
+//            }
+            userSpecificList.add(invoice);
         }
         
         
