@@ -63,3 +63,6 @@ Currently shoppingCartApplication-service tests dont seem to be running and are 
 Unable to create a Javadoc
 `[ERROR] Failed to execute goal org.apache.maven.plugins:maven-javadoc-plugin:3.3.1:javadoc (default-cli) on project shoppingCartApplication-model: An error has occurred in Javadoc report generation:`
 
+## Licensing and Copyright
+
+Licensed uner the Apache License Version 2.0.
